@@ -1,28 +1,28 @@
 package br.com.cauelopesmarques.springmongo.controllers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cauelopesmarques.springmongo.domain.User;
+import br.com.cauelopesmarques.springmongo.domains.User;
+import br.com.cauelopesmarques.springmongo.services.UserService;
 
 @RestController
 @RequestMapping(path = "/users")
 public class UserController {
 
+	@Autowired
+	private UserService us;
+	
 	@GetMapping
 	public ResponseEntity<List<User>> findAll() {
-		User maria = new User("1", "Maria", "maria@gmail.com");
-		User alex = new User("2", "Alex", "alex@gmail.com");
-		
-		List<User> list = new ArrayList<>();
-		list.addAll(Arrays.asList(maria, alex));
+		List<User> list = us.findAll();
 		
 		return ResponseEntity.ok().body(list);
+		
 	}
 }
