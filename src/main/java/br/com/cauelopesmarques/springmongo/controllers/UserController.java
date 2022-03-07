@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.cauelopesmarques.springmongo.domains.Post;
 import br.com.cauelopesmarques.springmongo.domains.User;
 import br.com.cauelopesmarques.springmongo.dto.UserDTO;
 import br.com.cauelopesmarques.springmongo.services.UserService;
@@ -67,5 +68,12 @@ public class UserController {
 		us.delete(id);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(path = "/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		User user = us.findById(id);	
+		
+		return ResponseEntity.ok().body(user.getPosts());
 	}
 }
